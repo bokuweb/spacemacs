@@ -43,6 +43,13 @@ values."
    dotspacemacs-additional-packages '(
      tabbar
      ace-isearch
+     multiple-cursors
+     magit
+     redo+
+     expand-region
+     highlight-symbol
+     web-mode
+     wgrep
    )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -205,3 +212,6 @@ layers configuration. You are free to put any user code."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+
+
+
