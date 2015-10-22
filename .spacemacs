@@ -50,6 +50,8 @@ values."
      highlight-symbol
      web-mode
      wgrep
+     migemo
+     helm-migemo
    )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
