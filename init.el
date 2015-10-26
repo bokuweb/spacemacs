@@ -128,7 +128,7 @@
  :height 2.0)
 
 (defvar my-tabbar-displayed-buffers
-  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-" "*terminal*" "*shell*" "spacemacs")
+  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-" "*terminal*" "*shell*" "spacemacs" "*terminal<0>*" "*terminal<1>*" "*terminal<2>*" "*terminal<3>*" "*terminal<4>*")
   "*Regexps matches buffer names always included tabs.")
 
 (defun my-tabbar-buffer-list ()
@@ -365,3 +365,24 @@ are always included."
 
 ;;; ace-isearch
 (global-ace-isearch-mode 1)
+
+;; ------------------------------------------------------------------------
+;; @ autocomplete.el
+(require 'auto-complete)
+(require 'auto-complete-config)
+(global-auto-complete-mode t)
+(ac-config-default)
+(define-key ac-completing-map (kbd "C-n") 'ac-next)
+(define-key ac-completing-map (kbd "C-p") 'ac-previous)
+(define-key ac-completing-map (kbd "C-m") 'ac-complete)
+
+
+;; ------------------------------------------------------------------------
+;; js2-mode
+(autoload 'js-mode "js")
+(setq js-indent-level 2)
+
+
+;;
+;; multi term
+(require 'multi-term)

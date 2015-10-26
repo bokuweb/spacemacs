@@ -52,6 +52,11 @@ values."
      wgrep
      migemo
      helm-migemo
+     company
+     auto-complete
+     js2-mode
+     elixir-mode
+     multi-term
    )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
