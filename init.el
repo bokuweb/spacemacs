@@ -403,6 +403,9 @@ are always included."
 ;;(setq company-minimum-prefix-length 2) ; デフォルトは4
 ;;(setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
 
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+
 ;;
 ;; multi term
 (require 'multi-term)
