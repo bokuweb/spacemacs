@@ -205,9 +205,15 @@ are always included."
 ;; ------------------------------------------------------------------------
 ;; @ redo+.el
 
+;;; redo+
+;;(require 'redo+)
+;;(global-set-key (kbd "C-M-/") 'redo+)
+;;(setq undo-no-redo t) ; 過去のundoがredoされないようにする
+;;(setq undo-limit 600000)
+;;(setq undo-strong-limit 900000)
+
 ;; http://www.emacswiki.org/emacs/redo+.el
-(when (require 'redo+ nil t)
-  (define-key global-map (kbd "C-_") 'redo))
+;;(define-key global-map (kbd "C-_") 'redo))
 
 
 ;; -------------------------------------------------------------------------
@@ -364,7 +370,19 @@ are always included."
     ad-do-it))
 
 ;;; ace-isearch
-(global-ace-isearch-mode 1)
+;;;(global-ace-isearch-mode 1)
+
+
+;; ------------------------------------------------------------------------
+;; js2-mode
+;;(autoload 'js2-jsx-mode "js")
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
+(add-hook 'js-mode-hook 'js2-minor-mode)
+
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(add-hook 'js2-jsx-mode-hook 'ac-js2-mode)
+(setq ac-js2-evaluate-calls t)
 
 ;; ------------------------------------------------------------------------
 ;; @ autocomplete.el
@@ -378,11 +396,34 @@ are always included."
 
 
 ;; ------------------------------------------------------------------------
-;; js2-mode
-(autoload 'js-mode "js")
-(setq js-indent-level 2)
-
+;; @ company-mode.el
+;;(require 'company)
+;;(global-company-mode) ; 全バッファで有効にする 
+;;(setq company-idle-delay 0) ; デフォルトは0.5
+;;(setq company-minimum-prefix-length 2) ; デフォルトは4
+;;(setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
 
 ;;
 ;; multi term
 (require 'multi-term)
+
+(delete-selection-mode t)
+
+
+(require 'sws-mode)
+(require 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.styl\\'" . sws-mode))
+
+
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-attr-indent-offset nil)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-sql-indent-offset 2)
+  (setq indent-tabs-mode nil)
+  (setq tab-width 2))
+(add-hook 'web-mode-hook 'my-web-mode-hook)
