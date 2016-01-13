@@ -26,6 +26,7 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
+     ;; common-lisp
      ;; git
      ;; markdown
      ;; org
@@ -65,6 +66,7 @@ values."
      trello
      simplenote
      shell
+     helm-git-grep
      )
 
    ;; List of additional packages that will be installed without being
@@ -92,7 +94,7 @@ values."
                                       ac-js2
                                       jade-mode
                                       sws-mode
-
+                                      flycheck
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -278,3 +280,6 @@ layers configuration. You are free to put any user code."
 
 (setq-default dotspacemacs-configuration-layers '(auto-completion))
 
+
+(defun dotspacemacs/user-config ()
+  (setq inferior-lisp-program "ros -L sbcl -Q run")) 

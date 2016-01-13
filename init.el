@@ -12,6 +12,8 @@
 
 ;; Without this comment emacs25 adds (package-initialize) here
 ;; (package-initialize)
+;; 事前にros emacsを実行しておくこと
+(load "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el")
 
 (setq gc-cons-threshold 100000000)
 (defconst spacemacs-version          "0.104.2" "Spacemacs version.")
@@ -378,6 +380,7 @@ are always included."
 ;;(autoload 'js2-jsx-mode "js")
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
 
 (add-hook 'js2-mode-hook 'ac-js2-mode)
@@ -430,3 +433,5 @@ are always included."
   (setq indent-tabs-mode nil)
   (setq tab-width 2))
 (add-hook 'web-mode-hook 'my-web-mode-hook)
+
+

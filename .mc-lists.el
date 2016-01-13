@@ -12,6 +12,7 @@
         helm-M-x
         ido-find-file
         js2-mode-show-node
+        mouse-save-then-kill
         shk-tabbar-prev
         tabbar-select-tab-callback
         ))
