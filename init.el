@@ -380,7 +380,7 @@ are always included."
 ;;(autoload 'js2-jsx-mode "js")
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-hook 'js-mode-hook 'js2-minor-mode)
 
 (add-hook 'js2-mode-hook 'ac-js2-mode)
@@ -389,14 +389,14 @@ are always included."
 
 ;; ------------------------------------------------------------------------
 ;; @ autocomplete.el
-(require 'auto-complete)
-(require 'auto-complete-config)
-(global-auto-complete-mode t)
-(ac-config-default)
-(define-key ac-completing-map (kbd "C-n") 'ac-next)
-(define-key ac-completing-map (kbd "C-p") 'ac-previous)
-(define-key ac-completing-map (kbd "C-m") 'ac-complete)
-
+;;(require 'auto-complete)
+;;(require 'auto-complete-config)
+;;(global-auto-complete-mode t)
+;;(ac-config-default)
+;;(define-key ac-completing-map (kbd "C-n") 'ac-next)
+;;(define-key ac-completing-map (kbd "C-p") 'ac-previous)
+;;(define-key ac-completing-map (kbd "C-m") 'ac-complete)
+;;
 
 ;; ------------------------------------------------------------------------
 ;; @ company-mode.el
@@ -420,18 +420,45 @@ are always included."
 (require 'jade-mode)
 (add-to-list 'auto-mode-alist '("\\.styl\\'" . sws-mode))
 
-
 (require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(defun my-web-mode-hook ()
-  "Hooks for Web mode."
-  (setq web-mode-attr-indent-offset nil)
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-sql-indent-offset 2)
-  (setq indent-tabs-mode nil)
-  (setq tab-width 2))
-(add-hook 'web-mode-hook 'my-web-mode-hook)
+;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+;;(defun my-web-mode-hook ()
+;;  "Hooks for Web mode."
+;;  (setq web-mode-attr-indent-offset nil)
+;;  (setq web-mode-markup-indent-offset 2)
+;;  (setq web-mode-css-indent-offset 2)
+;;  (setq web-mode-code-indent-offset 2)
+;;  (setq web-mode-sql-indent-offset 2)
+;;  (setq indent-tabs-mode nil)
+;;  (setq tab-width 2))
+;;(add-hook 'web-mode-hook 'my-web-mode-hook)
 
+
+;; @init.el
+(require 'flycheck)
+(global-flycheck-mode)
+
+;; @init.el
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
+(flycheck-def-executable-var 'jsxhint-checker "jsxhint")
+(flycheck-define-command-checker 'jsxhint-checker
+  "A JSX syntax and style checker based on JSXHint.
+   You must insatll jsxhint with `npm insatll -g jsxhint` first"
+
+  :command `("jsxhint" "--config" ,(expand-file-name "~/.emacs.d/.jshintrc") source)
+  :error-patterns '((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
+  :modes '(web-mode))
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (equal web-mode-content-type "jsx")
+              ;; enable flycheck
+              (flycheck-select-checker 'jsxhint-checker)
+              (flycheck-mode))))
 
