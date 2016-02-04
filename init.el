@@ -181,10 +181,10 @@ are always included."
 ;;
 ;; http://nishikawasasaki.hatenablog.com/entry/2012/12/31/094349
 (require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-M->") 'mc/skip-to-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-u") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-u") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-q") 'mc/mark-previous-like-this)
+(global-set-key (kbd "M-q") 'mc/mark-all-like-this)
 
 ;; -------------------------------------------------------------------------
 ;; highlight-symbol
@@ -192,8 +192,7 @@ are always included."
 (setq highlight-symbol-colors '("DarkOrange" "DodgerBlue1" "DeepPink1"))
 
 
-(global-set-key (kbd "C-S-h") 'highlight-symbol-at-point)
-(global-set-key (kbd "C-S-M-h") 'highlight-symbol-remove-all)
+(global-set-key (kbd "M-h") 'highlight-symbol-at-point)
 
 ;; -------------------------------------------------------------------------
 ;; expand region

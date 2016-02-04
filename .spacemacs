@@ -26,7 +26,8 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; common-lisp
+     common-lisp
+     ;;clojure
      ;; git
      ;; markdown
      ;; org
@@ -66,7 +67,7 @@ values."
      trello
      simplenote
      shell
-     helm-git-grep
+
      )
 
    ;; List of additional packages that will be installed without being
@@ -95,6 +96,8 @@ values."
                                       jade-mode
                                       sws-mode
                                       flycheck
+                                      helm-git-grep
+                                      clojure-mode
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil)

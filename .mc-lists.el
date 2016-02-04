@@ -5,6 +5,8 @@
       '(
         ignore
         kill-region
+        mouse-drag-header-line
+        mouse-select-window
         ))
 
 (setq mc/cmds-to-run-once
