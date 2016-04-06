@@ -23,9 +23,12 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
+     common-lisp
+     elm
+     ;;clojure
      ;; git
      ;; markdown
      ;; org
@@ -36,30 +39,69 @@ values."
      ;; syntax-checking
      ;; version-control
      )
+
+   dotspacemacs-configuration-layers
+   '(
+     ;; --------------------------------------------------------
+     ;; Example of useful layers you may want to use right away
+     ;; Uncomment a layer name and press C-c C-c to install it
+     ;; --------------------------------------------------------
+     (auto-completion :variables
+                      auto-completion-use-tab-instead-of-enter t
+                      auto-completion-enable-company-help-tooltip t)
+     syntax-checking
+     (colors :variables
+             colors-enable-nyan-cat-progress-bar t)
+     eyebrowse
+     gtags
+     xkcd
+     themes-megapack
+     git
+     evil-snipe
+     org
+     markdown
+     javascript
+     c-c++
+     php
+     html
+     haskell
+     trello
+     simplenote
+     shell
+     )
+
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(
-     tabbar
-     ace-isearch
-     multiple-cursors
-     magit
-     redo+
-     expand-region
-     highlight-symbol
-     web-mode
-     wgrep
-     migemo
-     helm-migemo
-     company
-     auto-complete
-     js2-mode
-     elixir-mode
-     multi-term
-   )
+                                      tabbar
+                                      company
+                                      ace-isearch
+                                      multiple-cursors
+                                      magit
+                                      redo+
+                                      expand-region
+                                      highlight-symbol
+                                      web-mode
+                                      wgrep
+                                      migemo
+                                      helm-migemo
+                                      company
+                                      auto-complete
+                                      js2-mode
+                                      elixir-mode
+                                      multi-term
+                                      ac-js2
+                                      jade-mode
+                                      sws-mode
+                                      flycheck
+                                      helm-git-grep
+                                      clojure-mode
+                                      elm-mode
+                                      )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(evil)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -212,6 +254,7 @@ user code."
   )
 
 (defun dotspacemacs/user-config ()
+  (global-company-mode)
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
@@ -222,3 +265,24 @@ layers configuration. You are free to put any user code."
 
 
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("11dd7fb48f2c0360f79e80a694c9e919a86dce32e5605018e9862e1e6287e3cb" default)))
+ '(js2-basic-offset 2)
+ '(tab-width 4))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; 何故か有効にするとJSのオートコンプリートが効かない
+;; common-lisp時にコメントはずす
+;;(defun dotspacemacs/user-config ()
+;;  (setq inferior-lisp-program "ros -L sbcl -Q run")) 

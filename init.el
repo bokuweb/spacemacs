@@ -12,6 +12,8 @@
 
 ;; Without this comment emacs25 adds (package-initialize) here
 ;; (package-initialize)
+;; 事前にros emacsを実行しておくこと
+(load "~/.roswell/impls/ALL/ALL/quicklisp/slime-helper.el")
 
 (setq gc-cons-threshold 100000000)
 (defconst spacemacs-version          "0.104.2" "Spacemacs version.")
@@ -179,10 +181,10 @@ are always included."
 ;;
 ;; http://nishikawasasaki.hatenablog.com/entry/2012/12/31/094349
 (require 'multiple-cursors)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-M->") 'mc/skip-to-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-u") 'mc/mark-next-like-this)
+(global-set-key (kbd "M-u") 'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-q") 'mc/mark-previous-like-this)
+(global-set-key (kbd "M-q") 'mc/mark-all-like-this)
 
 ;; -------------------------------------------------------------------------
 ;; highlight-symbol
@@ -190,8 +192,7 @@ are always included."
 (setq highlight-symbol-colors '("DarkOrange" "DodgerBlue1" "DeepPink1"))
 
 
-(global-set-key (kbd "C-S-h") 'highlight-symbol-at-point)
-(global-set-key (kbd "C-S-M-h") 'highlight-symbol-remove-all)
+(global-set-key (kbd "M-h") 'highlight-symbol-at-point)
 
 ;; -------------------------------------------------------------------------
 ;; expand region
@@ -205,9 +206,15 @@ are always included."
 ;; ------------------------------------------------------------------------
 ;; @ redo+.el
 
+;;; redo+
+;;(require 'redo+)
+;;(global-set-key (kbd "C-M-/") 'redo+)
+;;(setq undo-no-redo t) ; 過去のundoがredoされないようにする
+;;(setq undo-limit 600000)
+;;(setq undo-strong-limit 900000)
+
 ;; http://www.emacswiki.org/emacs/redo+.el
-(when (require 'redo+ nil t)
-  (define-key global-map (kbd "C-_") 'redo))
+;;(define-key global-map (kbd "C-_") 'redo))
 
 
 ;; -------------------------------------------------------------------------
@@ -364,25 +371,113 @@ are always included."
     ad-do-it))
 
 ;;; ace-isearch
-(global-ace-isearch-mode 1)
-
-;; ------------------------------------------------------------------------
-;; @ autocomplete.el
-(require 'auto-complete)
-(require 'auto-complete-config)
-(global-auto-complete-mode t)
-(ac-config-default)
-(define-key ac-completing-map (kbd "C-n") 'ac-next)
-(define-key ac-completing-map (kbd "C-p") 'ac-previous)
-(define-key ac-completing-map (kbd "C-m") 'ac-complete)
+;;;(global-ace-isearch-mode 1)
 
 
 ;; ------------------------------------------------------------------------
 ;; js2-mode
-(autoload 'js-mode "js")
-(setq js-indent-level 2)
+;;(autoload 'js2-jsx-mode "js")
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-jsx-mode))
+;;(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
+(add-hook 'js-mode-hook 'js2-minor-mode)
 
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(add-hook 'js2-jsx-mode-hook 'ac-js2-mode)
+(setq ac-js2-evaluate-calls t)
+
+;; ------------------------------------------------------------------------
+;; @ autocomplete.el
+;;(require 'auto-complete)
+;;(require 'auto-complete-config)
+;;(global-auto-complete-mode t)
+;;(ac-config-default)
+;;(define-key ac-completing-map (kbd "C-n") 'ac-next)
+;;(define-key ac-completing-map (kbd "C-p") 'ac-previous)
+;;(define-key ac-completing-map (kbd "C-m") 'ac-complete)
+;;
+
+;; ------------------------------------------------------------------------
+;; @ company-mode.el
+;;(require 'company)
+;;(global-company-mode) ; 全バッファで有効にする 
+;;(setq company-idle-delay 0) ; デフォルトは0.5
+;;(setq company-minimum-prefix-length 2) ; デフォルトは4
+;;(setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
+
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
 
 ;;
 ;; multi term
 (require 'multi-term)
+
+(delete-selection-mode t)
+
+
+(require 'sws-mode)
+(require 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.styl\\'" . sws-mode))
+
+(require 'web-mode)
+;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+;;(defun my-web-mode-hook ()
+;;  "Hooks for Web mode."
+;;  (setq web-mode-attr-indent-offset nil)
+;;  (setq web-mode-markup-indent-offset 2)
+;;  (setq web-mode-css-indent-offset 2)
+;;  (setq web-mode-code-indent-offset 2)
+;;  (setq web-mode-sql-indent-offset 2)
+;;  (setq indent-tabs-mode nil)
+;;  (setq tab-width 2))
+;;(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+
+;; @init.el
+(require 'flycheck)
+(global-flycheck-mode)
+
+;; @init.el
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+      (let ((web-mode-enable-part-face nil))
+        ad-do-it)
+    ad-do-it))
+
+;;(flycheck-def-executable-var 'jsxhint-checker "jsxhint")
+;;(flycheck-define-command-checker 'jsxhint-checker
+;;  "A JSX syntax and style checker based on JSXHint.
+;;   You must insatll jsxhint with `npm insatll -g jsxhint` first"
+;;
+;;  :command `("jsxhint" "--config" ,(expand-file-name "~/.emacs.d/.jshintrc") source)
+;;  :error-patterns '((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
+;;  :modes '(web-mode))
+
+;;(add-hook 'web-mode-hook
+;;          (lambda ()
+;;            (when (equal web-mode-content-type "jsx")
+;;              ;; enable flycheck
+;;              (flycheck-select-checker 'jsxhint-checker)
+;;              (flycheck-mode))))
+
+
+;; desable jsxhint and jscs
+(eval-after-load 'flycheck
+  '(custom-set-variables
+    '(flycheck-disabled-checkers '(javascript-jshint javascript-jscs))
+    ))
+
+
+(setq js2-include-browser-externs nil)
+(setq js2-mode-show-parse-errors nil)
+(setq js2-mode-show-strict-warnings nil)
+(setq js2-highlight-external-variables nil)
+(setq js2-include-jslint-globals nil)
+
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (equal web-mode-content-type "jsx")
+              (flycheck-add-mode 'javascript-eslint 'web-mode)
+              (flycheck-mode))))
+
