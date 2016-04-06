@@ -27,7 +27,10 @@ values."
      ;; better-defaults
      emacs-lisp
      common-lisp
+<<<<<<< HEAD
      elm
+=======
+>>>>>>> 9bf082aeefc77a1d3520f932c901f3afd1d46cf1
      ;;clojure
      ;; git
      ;; markdown
@@ -68,6 +71,10 @@ values."
      trello
      simplenote
      shell
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9bf082aeefc77a1d3520f932c901f3afd1d46cf1
      )
 
    ;; List of additional packages that will be installed without being
@@ -98,7 +105,10 @@ values."
                                       flycheck
                                       helm-git-grep
                                       clojure-mode
+<<<<<<< HEAD
                                       elm-mode
+=======
+>>>>>>> 9bf082aeefc77a1d3520f932c901f3afd1d46cf1
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil)
