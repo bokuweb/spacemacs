@@ -28,6 +28,8 @@ values."
      emacs-lisp
      common-lisp
      elm
+     react
+     go
      ;;clojure
      ;; git
      ;; markdown
@@ -68,6 +70,7 @@ values."
      trello
      simplenote
      shell
+     go
      )
 
    ;; List of additional packages that will be installed without being
@@ -99,6 +102,8 @@ values."
                                       helm-git-grep
                                       clojure-mode
                                       elm-mode
+                                      typescript-mode
+                                      tide
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil)

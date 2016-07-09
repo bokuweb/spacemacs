@@ -481,3 +481,22 @@ are always included."
               (flycheck-add-mode 'javascript-eslint 'web-mode)
               (flycheck-mode))))
 
+(require 'typescript-mode)
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+
+(require 'tide)
+(add-hook 'typescript-mode-hook
+          (lambda ()
+            (tide-setup)
+            (flycheck-mode t)
+            (setq flycheck-check-syntax-automatically '(save mode-enabled))
+            (company-mode-on)))
+
+(setq typescript-indent-level 2)
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (add-hook 'before-save-hook 'gofmt-before-save)
+            (setq tab-width 8)
+            (setq indent-tabs-mode 1)))
+
