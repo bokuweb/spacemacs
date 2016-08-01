@@ -43,7 +43,7 @@
          (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "MeiryoKe_Gothic")))  ;; 日本語
         ((eq ws 'ns)
          (set-face-attribute 'default nil
-                             :family "Osaka"  ;; 英数
+                             :family "mononoki"  ;; 英数
                              :height 140)
          (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Osaka")))))  ;; 日本語
 
@@ -130,7 +130,7 @@
  :height 2.0)
 
 (defvar my-tabbar-displayed-buffers
-  '("*scratch*" "*Messages*" "*Backtrace*" "*Colors*" "*Faces*" "*vc-" "*terminal*" "*shell*" "spacemacs" "*terminal<0>*" "*terminal<1>*" "*terminal<2>*" "*terminal<3>*" "*terminal<4>*")
+  '("*terminal*" "*shell*" "spacemacs" "*terminal<0>*" "*terminal<1>*" "*terminal<2>*" "*terminal<3>*" "*terminal<4>*" "*terminal<5>*"  "*terminal<6>*"  "*terminal<7>*"  "*terminal<8>*"  "*terminal<9>*"  "*terminal<10>*")
   "*Regexps matches buffer names always included tabs.")
 
 (defun my-tabbar-buffer-list ()
@@ -500,3 +500,6 @@ are always included."
             (setq tab-width 8)
             (setq indent-tabs-mode 1)))
 
+
+
+;;;
