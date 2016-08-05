@@ -293,7 +293,7 @@ layers configuration. You are free to put any user code."
     :command ("flow" "--json" source-original)
     :error-parser flycheck-parse-flow
     :modes js2-jsx-mode
-    :next-checkers ((error . javascript-eslint))
+    :next-checkers javascript-eslint
     )
   (add-to-list 'flycheck-checkers 'javascript-flow)
 )
