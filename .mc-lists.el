@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+        ido-switch-buffer
         ignore
         indent-for-tab-command
         kill-region

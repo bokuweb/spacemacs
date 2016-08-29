@@ -106,6 +106,7 @@ values."
                                       tide
                                       markdown-mode
                                       f
+                                      company-tern
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil)
@@ -262,6 +263,7 @@ user code."
 
 (defun dotspacemacs/user-config ()
   (global-company-mode)
+  (add-to-list 'company-backends '(company-tern :with company-dabbrev-code))
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
