@@ -511,5 +511,6 @@ are always included."
 (add-hook 'js2-jsx-mode-hook 'emmet-mode) ;;
 
 (add-to-list 'company-backends-js2-mode '(company-tern :with company-dabbrev-code))
+
 ;;;
 

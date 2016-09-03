@@ -268,38 +268,40 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  ;;; Flow (JS) flycheck config (http://flowtype.org)
-  ;; from https://github.com/bodil/emacs.d/blob/master/bodil/bodil-js.el
-  (require 'f)
-  (require 'json)
-  (defun flycheck-parse-flow (output checker buffer)
-    (let ((json-array-type 'list))
-      (let ((o (json-read-from-string output)))
-        (mapcar #'(lambda (errp)
-                    (let ((err (cadr (assoc 'message errp))))
-                      (flycheck-error-new
-                       :line (cdr (assoc 'line err))
-                       :column (cdr (assoc 'start err))
-                       :level 'error
-                       :message (cdr (assoc 'descr err))
-                       :filename (f-relative
-                                  (cdr (assoc 'path err))
-                                  (f-dirname (file-truename
-                                              (buffer-file-name))))
-                       :buffer buffer
-                       :checker checker)))
-                (cdr (assoc 'errors o))))))
+;; Flow (JS) flycheck config (http://flowtype.org)
+;; from https://github.com/bodil/emacs.d/blob/master/bodil/bodil-js.el
+(require 'f)
+(require 'json)
+(require 'flycheck)
 
-  (flycheck-define-checker javascript-flow
-    "Javascript type checking using Flow."
-    :command ("flow" "--json" source-original)
-    :error-parser flycheck-parse-flow
-    :modes js2-jsx-mode
-    :next-checkers javascript-eslint
-    )
-  (add-to-list 'flycheck-checkers 'javascript-flow)
+(defun flycheck-parse-flow (output checker buffer)
+  (let ((json-array-type 'list))
+    (let ((o (json-read-from-string output)))
+      (mapcar #'(lambda (errp)
+                  (let ((err (cadr (assoc 'message errp))))
+                    (flycheck-error-new
+                     :line (cdr (assoc 'line err))
+                     :column (cdr (assoc 'start err))
+                     :level 'error
+                     :message (cdr (assoc 'descr err))
+                     :filename (f-relative
+                                (cdr (assoc 'path err))
+                                (f-dirname (file-truename
+                                            (buffer-file-name))))
+                     :buffer buffer
+                     :checker checker)))
+              (cdr (assoc 'errors o))))))
+
+(flycheck-define-checker javascript-flow
+  "Javascript type checking using Flow."
+  :command ("flow" "--json" source-original)
+  :error-parser flycheck-parse-flow
+  :modes js2-jsx-mode
+  :next-checkers ((error . javascript-eslint))
+  )
+(add-to-list 'flycheck-checkers 'javascript-flow)
+
 )
-
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 
@@ -323,5 +325,5 @@ layers configuration. You are free to put any user code."
 
 ;; 何故か有効にするとJSのオートコンプリートが効かない
 ;; common-lisp時にコメントはずす
-;;(defun dotspacemacs/user-config ()
+;;(defun dotspaceMacs/User-config ()
 ;;  (setq inferior-lisp-program "ros -L sbcl -Q run")) 
